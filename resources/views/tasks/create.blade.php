@@ -37,8 +37,8 @@
                 <input type="text" class="form-control" id="inputDetailedDescription" name="detailed_description" placeholder="Введите описание">
             </div>
             <div class="form-check">
-                <input type="checkbox" name="checkTrue" class="form-check-input" id="checkTrue">
-                <label class="form-check-label" for="checkTrue">Опубликовано </label>
+                <input type="checkbox" name="published" class="form-check-input" id="published">
+                <label class="form-check-label" for="published">Опубликовано </label>
             </div>
             <button type="submit" class="btn btn-primary">Создать задачу</button>
         </form>

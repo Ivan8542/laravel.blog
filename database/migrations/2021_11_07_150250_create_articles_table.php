@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->text('name');
             $table->text('body');
             $table->text('detailed_description');
-            $table->text('checkTrue');
+            $table->text('published');
             $table->timestamps();
         });
     }
