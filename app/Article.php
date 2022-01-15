@@ -4,8 +4,11 @@
 namespace App;
 
 
-class Article extends Model
+class Article extends \Illuminate\Database\Eloquent\Model
 {
+//    public $fillable = ['name', 'body'];
+    public $guarded  = []; // єто снимаю защиту от всех полей
+
     public function getRouteKeyName()
     {
         return 'id';

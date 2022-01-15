@@ -6,6 +6,8 @@ use App\Article;
 
 class ArticlesController extends Controller
 {
+    public $guarded = [];
+
     public function index()
     {
         $title = 'Главная';
@@ -51,8 +53,35 @@ class ArticlesController extends Controller
 
         Article::create(request()->all());
 
-        return redirect('/');
+        return redirect('/articles');
 
     }
 
+    public function edit(Article $article)
+    {
+        $menu = $this->menu();
+        $title = 'edit статьи';
+
+        return view('tasks.edit', compact("title","article", "menu"));
+    }
+    public function update(Article $article)
+    {
+        $attributes = request()->validate([
+            'name' => 'required|min:5|max:255',
+            'body' => 'required|max:255',
+            'published' => 'required',
+            'detailed_description' => 'required',
+            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
+        ]);
+
+        $article->update($attributes);
+
+        return redirect("/articles");
+    }
+    public function destroy(Article $article)
+    {
+        $article->delete();
+
+        return redirect("/articles");
+    }
 }
