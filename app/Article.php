@@ -18,4 +18,19 @@ class Article extends \Illuminate\Database\Eloquent\Model
     {
         return $query->where('completed', 0);
     }
+
+    public function steps()
+    {
+        return $this->hasMany(Step::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function addStep($attributes)
+    {
+        return $this->steps()->create($attributes);
+    }
 }

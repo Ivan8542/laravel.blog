@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Http\Requests\FormArticleRequest;
 
 class ArticlesController extends Controller
 {
@@ -12,7 +13,8 @@ class ArticlesController extends Controller
     {
         $title = 'Главная';
         $menu = $this->menu();
-        $articles = Article::latest()->get();
+//        $articles = Article::latest()->get();
+        $articles = Article::with('tags')->latest()->get();
 
         return view('tasks.index', compact("articles", 'title', 'menu'));
     }
@@ -41,17 +43,18 @@ class ArticlesController extends Controller
         return view('tasks.create', compact("title", 'menu'));
     }
 
-    public function store()
+    public function store(FormArticleRequest $request)
     {
-        $this->validate(request(), [
-            'name' => 'required|min:5|max:255',
-            'body' => 'required|max:255',
-            'published' => 'required',
-            'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
-        ]);
+//        $this->validate(request(), [
+//            'name' => 'required|min:5|max:255',
+//            'body' => 'required|max:255',
+//            'published' => 'required',
+//            'detailed_description' => 'required',
+//            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
+//        ]);
+        $request->validated();
 
-        Article::create(request()->all());
+        Article::create($request->all());
 
         return redirect('/articles');
 
@@ -64,15 +67,16 @@ class ArticlesController extends Controller
 
         return view('tasks.edit', compact("title","article", "menu"));
     }
-    public function update(Article $article)
+    public function update(Article $article, FormArticleRequest $request)
     {
-        $attributes = request()->validate([
-            'name' => 'required|min:5|max:255',
-            'body' => 'required|max:255',
-            'published' => 'required',
-            'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
-        ]);
+//        $attributes = request()->validate([
+//            'name' => 'required|min:5|max:255',
+//            'body' => 'required|max:255',
+//            'published' => 'required',
+//            'detailed_description' => 'required',
+//            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
+//        ]);
+        $attributes = $request->validated();
 
         $article->update($attributes);
 

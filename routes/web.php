@@ -13,7 +13,17 @@
 //
 //
 ////
+//Route::view('/', 'welcome');
+
+Route::get('/', 'ArticlesController@index');
 Route::resource('/articles', 'ArticlesController');
+Route::post('/articles/{step}/steps/', 'ArticleStepsController@store');
+
+//Route::patch('/steps/{step}', 'ArticleStepsController@update');
+
+Route::post('/completed-steps/{steps}', 'CompletedStepsController@store');
+Route::delete('/completed-steps/{steps}', 'CompletedStepsController@destroy');
+
 //
 //Route::get('/tasks{task}/edit', 'ArticlesController@edit');
 //Route::patch('/tasks/{task}', 'ArticlesController@update');
