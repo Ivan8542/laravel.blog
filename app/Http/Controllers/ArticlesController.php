@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Http\Requests\FormArticleRequest;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ArticlesController extends Controller
 {
@@ -44,9 +46,9 @@ class ArticlesController extends Controller
 
     public function store(FormArticleRequest $request)
     {
-        $request->validated();
+        $attributes = $request->validated();
 
-        Article::create($request->all());
+        Article::create($attributes);
 
         return redirect('/articles');
 
@@ -59,9 +61,18 @@ class ArticlesController extends Controller
 
         return view('tasks.edit', compact("title","article", "menu"));
     }
+
     public function update(Article $article, FormArticleRequest $request)
     {
-        $attributes = $request->validated();
+        // вот єто не знаю
+        $validate = Validator::make($request->rules(), [
+            'character_code' => [
+                'required|regex:/^[0-9a-zA-Z\-\_]+$/',
+                Rule::unique('articles')->ignore($article),
+            ],
+        ]);
+
+        $attributes = $validate->validated();
 
         $article->update($attributes);
 

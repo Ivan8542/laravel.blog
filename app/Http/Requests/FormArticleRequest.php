@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class FormArticleRequest extends FormRequest
 {
@@ -28,7 +31,7 @@ class FormArticleRequest extends FormRequest
             'body' => 'required|max:255',
             'published' => 'required',
             'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
+            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/',
         ];
     }
 }
