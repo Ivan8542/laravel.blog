@@ -26,12 +26,13 @@ class FormArticleRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'name' => 'required|min:5|max:255',
             'body' => 'required|max:255',
             'published' => 'required',
             'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/',
+            'character_code' => 'required|regex:/^[0-9a-zA-Z\-\_]+$/|unique:articles',
         ];
     }
 }

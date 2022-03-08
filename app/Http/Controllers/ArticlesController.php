@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Http\Requests\FormArticleRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Symfony\Component\HttpKernel\EventListener\ValidateRequestListener;
 
 class ArticlesController extends Controller
 {
@@ -64,15 +66,16 @@ class ArticlesController extends Controller
 
     public function update(Article $article, FormArticleRequest $request)
     {
-        // вот єто не знаю
-        $validate = Validator::make($request->rules(), [
-            'character_code' => [
-                'required|regex:/^[0-9a-zA-Z\-\_]+$/',
-                Rule::unique('articles')->ignore($article),
-            ],
-        ]);
-
-        $attributes = $validate->validated();
+        if ($article->character_code == \request('character_code')) {
+            $attributes = \request()->validate([
+                'name' => 'required|min:5|max:255',
+                'body' => 'required|max:255',
+                'published' => 'required',
+                'detailed_description' => 'required',
+                'character_code' => 'required|regex:/^[0-9a-zA-Z\-\_]+$/',]);
+        } else {
+            $attributes = $request->validated();
+        }
 
         $article->update($attributes);
 
