@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 
 //Route::get('/', 'ArticlesController@index');
 //Route::resource('/articles', 'ArticlesController');
@@ -53,15 +52,13 @@ Route::get('/admin/feedback', [AdminController::class, 'feedback']);
 //Route::post('/articles/{step}/steps/', 'ArticleStepsController@store');
 //Route::post('/completed-steps/{steps}', 'CompletedStepsController@store');
 //Route::delete('/completed-steps/{steps}', 'CompletedStepsController@destroy');
-=======
-Route::get('/', 'ArticlesController@index');
-Route::resource('/articles', 'ArticlesController');
-Route::post('/articles/{step}/steps/', 'ArticleStepsController@store');
-
-
-Route::post('/completed-steps/{steps}', 'CompletedStepsController@store');
-Route::delete('/completed-steps/{steps}', 'CompletedStepsController@destroy');
->>>>>>> 973c9aacba4e62a28d90d4b8429e2fc3c0ee6f72
+//Route::get('/', 'ArticlesController@index');
+//Route::resource('/articles', 'ArticlesController');
+//Route::post('/articles/{step}/steps/', 'ArticleStepsController@store');
+//
+//
+//Route::post('/completed-steps/{steps}', 'CompletedStepsController@store');
+//Route::delete('/completed-steps/{steps}', 'CompletedStepsController@destroy');
 
 
 
