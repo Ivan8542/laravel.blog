@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Article;
+=======
+use App\Article;
+>>>>>>> 973c9aacba4e62a28d90d4b8429e2fc3c0ee6f72
 use App\Http\Requests\FormArticleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -76,6 +80,11 @@ class ArticlesController extends Controller
         } else {
             $attributes = $request->validated();
         }
+<<<<<<< HEAD
+=======
+
+        $article->update($attributes);
+>>>>>>> 973c9aacba4e62a28d90d4b8429e2fc3c0ee6f72
 
         return redirect("/articles");
     }
