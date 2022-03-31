@@ -9,6 +9,12 @@
         </h3>
 
         <hr>
+
+        {{ $article->body }}
+
+        @include('layout.error')
+
+        <hr>
         <p class="blog-post-meta">Дата создания: {{ $article->created_at->toFormattedDateString() }}</p>
 
         {{ $article->detailed_description }}

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
+use App\Models\Article;
+use App\Http\Requests\FormArticleRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpKernel\EventListener\ValidateRequestListener;
 
 class ArticlesController extends Controller
 {
@@ -41,17 +46,11 @@ class ArticlesController extends Controller
         return view('tasks.create', compact("title", 'menu'));
     }
 
-    public function store()
+    public function store(FormArticleRequest $request)
     {
-        $this->validate(request(), [
-            'name' => 'required|min:5|max:255',
-            'body' => 'required|max:255',
-            'published' => 'required',
-            'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
-        ]);
+        $attributes = $request->validated();
 
-        Article::create(request()->all());
+        Article::create($attributes);
 
         return redirect('/articles');
 
@@ -64,17 +63,19 @@ class ArticlesController extends Controller
 
         return view('tasks.edit', compact("title","article", "menu"));
     }
-    public function update(Article $article)
-    {
-        $attributes = request()->validate([
-            'name' => 'required|min:5|max:255',
-            'body' => 'required|max:255',
-            'published' => 'required',
-            'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
-        ]);
 
-        $article->update($attributes);
+    public function update(Article $article, FormArticleRequest $request)
+    {
+        if ($article->character_code == \request('character_code')) {
+            $attributes = \request()->validate([
+                'name' => 'required|min:5|max:255',
+                'body' => 'required|max:255',
+                'published' => 'required',
+                'detailed_description' => 'required',
+                'character_code' => 'required|regex:/^[0-9a-zA-Z\-\_]+$/',]);
+        } else {
+            $attributes = $request->validated();
+        }
 
         return redirect("/articles");
     }

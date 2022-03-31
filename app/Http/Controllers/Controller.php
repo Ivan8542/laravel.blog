@@ -27,7 +27,7 @@ class Controller extends BaseController
                 'name' => 'Контакты',
             ],
             [
-                'path' => '/articles/create',
+                'path' => '/articles/create/page',
                 'name' => 'Создать статью',
             ],
             [
