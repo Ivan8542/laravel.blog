@@ -9,30 +9,24 @@ use Illuminate\Validation\Rule;
 
 class FormArticleRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
+    public static function validation($code = '')
     {
-        return true;
-    }
+        $validateUnique = '';
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
+        if ($code !== request()->get('character_code')) {
 
-        return [
+            $validateUnique = '|unique:articles';
+
+        }
+
+        $attributes = request()->validate([
             'name' => 'required|min:5|max:255',
             'body' => 'required|max:255',
             'published' => 'required',
             'detailed_description' => 'required',
-            'character_code' => 'required|regex:/^[0-9a-zA-Z\-\_]+$/|unique:articles',
-        ];
+            'character_code' => 'required|regex:/^[0-9a-zA-Z\-\_]+$/' . $validateUnique,
+        ]);
+
+        return $attributes;
     }
 }

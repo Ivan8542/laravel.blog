@@ -46,14 +46,11 @@ class ArticlesController extends Controller
         return view('tasks.create', compact("title", 'menu'));
     }
 
-    public function store(FormArticleRequest $request)
+    public function store()
     {
-        $attributes = $request->validated();
-
-        Article::create($attributes);
+        Article::create(FormArticleRequest::validation());
 
         return redirect('/articles');
-
     }
 
     public function edit(Article $article)
@@ -61,26 +58,16 @@ class ArticlesController extends Controller
         $menu = $this->menu();
         $title = 'edit статьи';
 
-        return view('tasks.edit', compact("title","article", "menu"));
+        return view('tasks.edit', compact("title", "article", "menu"));
     }
 
-    public function update(Article $article, FormArticleRequest $request)
+    public function update(Article $article)
     {
-        if ($article->character_code == \request('character_code')) {
-            $attributes = \request()->validate([
-                'name' => 'required|min:5|max:255',
-                'body' => 'required|max:255',
-                'published' => 'required',
-                'detailed_description' => 'required',
-                'character_code' => 'required|regex:/^[0-9a-zA-Z\-\_]+$/',]);
-        } else {
-            $attributes = $request->validated();
-        }
-
-        $article->update($attributes);
+        $article->update(FormArticleRequest::validation($article->character_code));
 
         return redirect("/articles");
     }
+
     public function destroy(Article $article)
     {
         $article->delete();
