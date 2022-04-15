@@ -18,6 +18,17 @@
     <input type="text" class="form-control" id="inputDetailedDescription" name="detailed_description"
            placeholder="Введите описание" value="{{ old('detailed_description', $article->detailed_description ?? '') }}">
 </div>
+
+<div class="form-group">
+    <label for="inputDetailedDescription">Теги</label>
+    <input type="text"
+           class="form-control"
+           id="inputTags"
+           name="tags"
+           placeholder="Введите теги"
+           value="{{ old('tags', $article->tags->pluck('name')->implode(',') ?? '') }}">
+</div>
+
 <div class="form-check">
     <input type="checkbox" name="published" class="form-check-input" id="published">
     <label class="form-check-label" for="published">Опубликовано </label>
