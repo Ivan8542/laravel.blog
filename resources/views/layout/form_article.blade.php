@@ -26,7 +26,13 @@
            id="inputTags"
            name="tags"
            placeholder="Введите теги"
-           value="{{ old('tags', $article->tags->pluck('name')->implode(',') ?? '') }}">
+           @if(Request::path() == 'articles/create/page')
+            value="{{ old('tags', $article->tags->name ?? '') }}"
+           @endif
+           @if(Request::path() !== 'articles/create/page')
+            value="{{ old('tags', $article->tags->pluck('name')->implode(',') ?? '') }}"
+           @endif
+           >
 </div>
 
 <div class="form-check">

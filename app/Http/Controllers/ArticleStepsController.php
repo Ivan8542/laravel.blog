@@ -17,11 +17,12 @@ class ArticleStepsController extends Controller
         return back();
     }
 
-//    public function update(Step $step)
-//    {
-//        $method = \request()->has('completed') ? 'complete' : 'incomplete';
-//        $step->{$method}();
-//
-//        return back();
-//    }
+    //
+    public function update(Step $step)
+    {
+        $method = \request()->has('completed') ? 'complete' : 'incomplete';
+        $step->{$method}();
+
+        return back();
+    }
 }

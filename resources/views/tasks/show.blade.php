@@ -23,12 +23,11 @@
             <ul class="list-group">
                 @foreach($article->steps as $step)
                     <li class="list-group-item">
-                        <form method="POST" action="/completed-steps/{{ $step->id }}">
-                            @if($step->completed)
-                                @method('DELETE')
-                            @endif
-
-{{--                            @method('PATCH')--}}
+                        <form method="POST" action="/steps/{{ $step->id }}">
+{{--                            @if($step->completed)--}}
+{{--                                @method('DELETE')--}}
+{{--                            @endif--}}
+                            @method('PATCH')
                             @csrf
 
                             <div class="form-check">
