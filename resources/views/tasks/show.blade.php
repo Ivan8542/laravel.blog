@@ -27,6 +27,7 @@
 {{--                            @if($step->completed)--}}
 {{--                                @method('DELETE')--}}
 {{--                            @endif--}}
+
                             @method('PATCH')
                             @csrf
 

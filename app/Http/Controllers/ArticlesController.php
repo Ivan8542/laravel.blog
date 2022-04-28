@@ -98,12 +98,6 @@ class ArticlesController extends Controller
     {
         $article->delete();
 
-//        $a = $article->tags()->get();
-//        foreach ($a as $item) {
-//            Tag::find($item->id)->destroy();
-//        }
-
-
         return redirect("/articles");
     }
 }

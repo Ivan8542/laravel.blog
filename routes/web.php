@@ -49,6 +49,7 @@ Route::post('/articles/contacts', [ContactsController::class, 'store']);
 
 Route::post('/articles/{article}/steps', [ArticleStepsController::class ,'store']);
 Route::patch('/steps/{step}', [ArticleStepsController::class ,'update']);
+
 //Route::post('/completed-steps/{steps}', [CompletedStepsController::class, 'store']);
 //Route::delete('/completed-steps/{steps}', [CompletedStepsController::class, 'destroy']);
 

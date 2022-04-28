@@ -11,11 +11,11 @@ class Step extends Model
 
     public function complete($completed = true)
     {
-        $this->update(['completed' => $completed]);
+        return $this->update(['completed' => $completed]);
     }
 
     public function incomplete()
     {
-        $this->complete(false);
+        return $this->complete(false);
     }
 }
