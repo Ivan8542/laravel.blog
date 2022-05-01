@@ -56,6 +56,11 @@ Route::patch('/steps/{step}', [ArticleStepsController::class ,'update']);
 Route::get('/admin/feedback', [AdminController::class, 'feedback']);
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
 
 //Route::post('/articles/{step}/steps/', 'ArticleStepsController@store');
 //Route::post('/completed-steps/{steps}', 'CompletedStepsController@store');
