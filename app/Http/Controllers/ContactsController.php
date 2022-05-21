@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Contact;
+use App\Models\Contact;
 
 class ContactsController extends Controller
 {
@@ -25,7 +25,7 @@ class ContactsController extends Controller
 
         Contact::create(request()->all());
 
-        return redirect('/');
+        return redirect('/articles');
 
     }
 }

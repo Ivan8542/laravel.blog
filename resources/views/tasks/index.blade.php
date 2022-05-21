@@ -6,7 +6,7 @@
             Список задач
         </h3>
 
-        @foreach($articles as $article)
+        @foreach($articles ?? '' as $article)
             @include('tasks.item')
         @endforeach
 

@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
+use App\Models\Contact;
 
 class AdminController extends Controller
 {
