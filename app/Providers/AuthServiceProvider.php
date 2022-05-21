@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Article;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        \App\Models\Article::class => \App\Policies\ArticlePolicy::class,
     ];
 
     /**
@@ -21,10 +22,14 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(\Illuminate\Contracts\Auth\Access\Gate $gate)
     {
         $this->registerPolicies();
 
-        //
+        $gate->before(function ($user) {
+            if ($user->id == 2) {
+                return true;
+            }
+        });
     }
 }

@@ -5,7 +5,9 @@
         <h3 class="pb-3 mb-4 font-italic border-bottom">
             {{ $article->name }}
 
-            <a href="/articles/{{ $article->id }}/edit">Изменить</a>
+            @can('update', $article)
+                <a href="/articles/{{ $article->id }}/edit">Изменить</a>
+            @endcan
         </h3>
 
         @include('tasks.tags', ['tags' => $article->tags])
@@ -19,14 +21,16 @@
 
         {{ $article->detailed_description }}
 
+        <hr>
+
         @if($article->steps->isNotEmpty())
             <ul class="list-group">
                 @foreach($article->steps as $step)
                     <li class="list-group-item">
                         <form method="POST" action="/steps/{{ $step->id }}">
-{{--                            @if($step->completed)--}}
-{{--                                @method('DELETE')--}}
-{{--                            @endif--}}
+                            {{--                            @if($step->completed)--}}
+                            {{--                                @method('DELETE')--}}
+                            {{--                            @endif--}}
 
                             @method('PATCH')
                             @csrf
@@ -37,7 +41,7 @@
                                            class="form-check-input"
                                            name="completed"
                                            onclick="this.form.submit()"
-                                           {{ $step->completed ? 'checked' : '' }}
+                                        {{ $step->completed ? 'checked' : '' }}
                                     >
                                     {{ $step->description }}
                                 </label>

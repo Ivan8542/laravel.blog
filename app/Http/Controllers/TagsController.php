@@ -12,7 +12,7 @@ class TagsController extends Controller
         $title = 'Статьи';
         $menu = $this->menu();
 
-        $articles = $tag->articles()->with('tags')->get(); //тут ошибка какая то
+        $articles = $tag->articles()->with('tags')->get();
 
         return view('tasks.index', compact('articles','title', 'menu'));
     }

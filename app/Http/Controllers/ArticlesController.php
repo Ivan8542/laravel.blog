@@ -13,11 +13,18 @@ use Symfony\Component\HttpKernel\EventListener\ValidateRequestListener;
 
 class ArticlesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:update,article')->except(['index', 'about', 'store', 'create']);
+    }
+
     public function index()
     {
         $title = 'Главная';
         $menu = $this->menu();
-        $articles = Article::with('tags')->latest()->get();
+
+        $articles = auth()->user()->articles()->with('tags')->latest()->get();
 
         return view('tasks.index', compact("articles", 'title', 'menu'));
     }
@@ -51,30 +58,10 @@ class ArticlesController extends Controller
         $article = Article::create(FormArticleRequest::validation());
         $tags = collect(explode(',', \request('tags')))->keyBy(function ($item) { return $item; });
 
-        $tagsSynchronizer->sync($tags, $article); // здесь будут созданы теги, сервис этот надо создать и там уже сделать обработку
+        $tagsSynchronizer->sync($tags, $article);
 
         return redirect('/articles');
     }
-
-//    public function store(Article $article)
-//    {
-//        $article = Article::create(FormArticleRequest::validation());
-//
-////        $articleTags = $article->tags->keyBy('name');
-////        $tags = collect(explode(',', \request('tags')))->keyBy(function ($item) { return $item; });
-////
-////        $syncIds = $articleTags->intersectByKeys($tags)->pluck('id')->toArray();
-////        $tagsToAttach = $tags->diffKeys($articleTags);
-////
-////        foreach ($tagsToAttach as $tag) {
-////            $tag = Tag::firstOrCreate(['name' => $tag]);
-////            $syncIds[] = $tag->id;
-////        }
-////
-////        $article->tags()->sync($syncIds);
-//
-//        return redirect('/articles');
-//    }
 
     public function edit(Article $article)
     {

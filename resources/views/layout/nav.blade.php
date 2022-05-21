@@ -5,7 +5,7 @@
                 <a class="text-muted" href="#">Subscribe</a>
             </div>
             <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="#">Large</a>
+                <a class="blog-header-logo text-dark" href="/">{{ config("app.name") }}</a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
                 <a class="text-muted" href="#">
@@ -23,8 +23,7 @@
                     @endif
 
                     @if (Route::has('register'))
-                        <a class="btn btn-sm btn-outline-secondary"
-                           href="{{ route('register') }}">{{ __('Register') }}</a>
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ route('register') }}">{{ __('Register') }}</a>
                     @endif
                 @else
                     <a id="navbarDropdown" class="btn btn-sm btn-outline-secondary dropdown-toggle" href="#"

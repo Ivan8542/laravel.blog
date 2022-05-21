@@ -27,6 +27,8 @@ class FormArticleRequest extends FormRequest
             'character_code' => 'required|regex:/^[0-9a-zA-Z\-\_]+$/' . $validateUnique,
         ]);
 
+        $attributes['owner_id'] = auth()->id();
+
         return $attributes;
     }
 }
