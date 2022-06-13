@@ -4,12 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\FormArticleRequest;
-use App\Models\Tag;
 use App\Service\TagsSynchronizer;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Symfony\Component\HttpKernel\EventListener\ValidateRequestListener;
+
 
 class ArticlesController extends Controller
 {

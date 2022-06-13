@@ -15,8 +15,8 @@
 </div>
 <div class="form-group">
     <label for="inputDetailedDescription">Детальное описание</label>
-    <input type="text" class="form-control" id="inputDetailedDescription" name="detailed_description"
-           placeholder="Введите описание" value="{{ old('detailed_description', $article->detailed_description ?? '') }}">
+    <textarea  type="text" class="form-control" id="inputDetailedDescription" name="detailed_description"
+               placeholder="Введите описание" >{{ old('detailed_description', $article->detailed_description ?? '') }}</textarea>
 </div>
 
 <div class="form-group">
@@ -36,6 +36,10 @@
 </div>
 
 <div class="form-check">
-    <input type="checkbox" name="published" class="form-check-input" id="published">
-    <label class="form-check-label" for="published">Опубликовано </label>
+
+    @if(Request::path() == 'articles/create/page')
+        <input type="checkbox" name="published" class="form-check-input" id="published">
+        <label class="form-check-label" for="published">Опубликовано </label>
+    @endif
+
 </div>
