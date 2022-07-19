@@ -37,9 +37,7 @@
 
 <div class="form-check">
 
-    @if(Request::path() == 'articles/create/page')
-        <input type="checkbox" name="published" class="form-check-input" id="published">
+        <input type="checkbox" name="published" class="form-check-input" id="published" value="1">
         <label class="form-check-label" for="published">Опубликовано </label>
-    @endif
 
 </div>
