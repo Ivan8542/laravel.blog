@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form method="post" action="/">
+        <form method="post" action="/articles/contacts">
 
             {{  csrf_field() }}
 

@@ -15,12 +15,15 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('owner_id');
             $table->text('character_code');
             $table->text('name');
             $table->text('body');
             $table->text('detailed_description');
             $table->text('published');
             $table->timestamps();
+
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
+use App\Models\Article;
+use App\Http\Requests\FormArticleRequest;
+use App\Service\TagsSynchronizer;
+
 
 class ArticlesController extends Controller
 {
-    public $guarded = [];
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:update,article')->except(['index', 'about', 'store', 'create']);
+    }
 
     public function index()
     {
         $title = 'Главная';
         $menu = $this->menu();
-        $articles = Article::latest()->get();
+
+        $articles = auth()->user()->articles()->with('tags')->latest()->get();
 
         return view('tasks.index', compact("articles", 'title', 'menu'));
     }
@@ -41,20 +49,14 @@ class ArticlesController extends Controller
         return view('tasks.create', compact("title", 'menu'));
     }
 
-    public function store()
+    public function store(Article $article, TagsSynchronizer $tagsSynchronizer)
     {
-        $this->validate(request(), [
-            'name' => 'required|min:5|max:255',
-            'body' => 'required|max:255',
-            'published' => 'required',
-            'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
-        ]);
+        $article = Article::create(FormArticleRequest::validation());
+        $tags = collect(explode(',', \request('tags')))->keyBy(function ($item) { return $item; });
 
-        Article::create(request()->all());
+        $tagsSynchronizer->sync($tags, $article);
 
         return redirect('/articles');
-
     }
 
     public function edit(Article $article)
@@ -62,22 +64,19 @@ class ArticlesController extends Controller
         $menu = $this->menu();
         $title = 'edit статьи';
 
-        return view('tasks.edit', compact("title","article", "menu"));
+        return view('tasks.edit', compact("title", "article", "menu"));
     }
-    public function update(Article $article)
-    {
-        $attributes = request()->validate([
-            'name' => 'required|min:5|max:255',
-            'body' => 'required|max:255',
-            'published' => 'required',
-            'detailed_description' => 'required',
-            'character_code' => 'required|unique:articles|regex:/^[0-9a-zA-Z\-\_]+$/'
-        ]);
 
-        $article->update($attributes);
+    public function update(Article $article, TagsSynchronizer $tagsSynchronizer)
+    {
+        $article->update(FormArticleRequest::validation($article->character_code));
+        $tags = collect(explode(',', \request('tags')))->keyBy(function ($item) { return $item; });
+
+        $tagsSynchronizer->sync($tags, $article);
 
         return redirect("/articles");
     }
+
     public function destroy(Article $article)
     {
         $article->delete();
