@@ -30,14 +30,19 @@
             value="{{ old('tags', $article->tags->name ?? '') }}"
            @endif
            @if(Request::path() !== 'articles/create/page')
-            value="{{ old('tags', $article->tags->pluck('name')->implode(',') ?? '') }}"
+{{--            value="{{ old('tags', $article->tags->pluck('name')->implode(',') ?? '') }}"--}}
+            @if (isset($article->tags))
+            value="{{ $article->tags->pluck('name')->implode(',') }}"
+            @else
+            value="{{ old('tags') }}"
+            @endif
            @endif
            >
 </div>
 
 <div class="form-check">
 
-        <input type="checkbox" name="published" class="form-check-input" id="published" value="1">
+        <input type="checkbox" name="published" class="form-check-input" id="published" value="0">
         <label class="form-check-label" for="published">Опубликовано </label>
 
 </div>
