@@ -58,7 +58,7 @@ Route::get('/admin/feedback', [AdminController::class, 'feedback']);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 
@@ -72,10 +72,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //
 //Route::post('/completed-steps/{steps}', 'CompletedStepsController@store');
 //Route::delete('/completed-steps/{steps}', 'CompletedStepsController@destroy');
-
-
-
-
 
 Auth::routes();
 
