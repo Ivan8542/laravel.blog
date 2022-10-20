@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Step;
-use Illuminate\Http\Request;
 
 class ArticleStepsController extends Controller
 {

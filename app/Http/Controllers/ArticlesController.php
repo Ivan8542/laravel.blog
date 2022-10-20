@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TaskCreated;
 use App\Models\Article;
 use App\Http\Requests\FormArticleRequest;
 use App\Service\TagsSynchronizer;
+//use Illuminate\Support\Facades\Mail;
 
 
 class ArticlesController extends Controller
@@ -22,6 +24,9 @@ class ArticlesController extends Controller
 
         $articles = auth()->user()->articles()->with('tags')->latest()->get();
 
+//        cache()->put('dump', 'test');
+//        $demo = cache()->get('demo');
+//        dump($demo);
         return view('tasks.index', compact("articles", 'title', 'menu'));
     }
 
@@ -52,9 +57,14 @@ class ArticlesController extends Controller
     public function store(Article $article, TagsSynchronizer $tagsSynchronizer)
     {
         $article = Article::create(FormArticleRequest::validation());
-        $tags = collect(explode(',', \request('tags')))->keyBy(function ($item) { return $item; });
+        $tags = collect(explode(',', \request('tags')))->keyBy(function ($item) {
+            return $item;
+        });
 
         $tagsSynchronizer->sync($tags, $article);
+
+
+//        event(new TaskCreated($article));
 
         return redirect('/articles');
     }

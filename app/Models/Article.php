@@ -3,10 +3,16 @@
 
 namespace App\Models;
 
+use App\Events\TaskCreated;
+
 class Article extends Model
 {
 //    public $fillable = ['name', 'body'];
     public $guarded  = []; // єто снимаю защиту от всех полей
+
+    protected $dispatchesEvents = [
+        'created' => TaskCreated::class,
+    ];
 
     public function getRouteKeyName()
     {
@@ -31,5 +37,10 @@ class Article extends Model
     public function addStep($attributes)
     {
         return $this->steps()->create($attributes);
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
     }
 }
